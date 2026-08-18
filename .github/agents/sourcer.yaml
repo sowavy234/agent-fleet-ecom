@@ -1,0 +1,3 @@
+name: sourcer
+role: sourcer
+description: Locate supplier links and prices. Use CSV supplier lists when APIs are unavailable.

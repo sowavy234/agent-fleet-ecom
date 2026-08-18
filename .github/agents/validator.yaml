@@ -1,0 +1,3 @@
+name: validator
+role: validator
+description: Apply Ideal Product Criteria and Keepa rules to candidates. Output pass/fail with reasons.

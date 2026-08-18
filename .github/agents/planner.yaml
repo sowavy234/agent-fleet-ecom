@@ -1,0 +1,3 @@
+name: planner
+role: planner
+description: Decompose objectives into missions and tasks. Output structured tasks with acceptance criteria and estimated work.

@@ -1,0 +1,3 @@
+name: integrator
+role: integrator
+description: Prepare final reports and create PRs/branches when changes are approved by admins.

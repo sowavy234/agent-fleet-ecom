@@ -1,0 +1,3 @@
+name: scraper
+role: scraper
+description: Fetch product listing metadata. In NO-API mode, accepts CSV input with ASIN/UPC/URL.
