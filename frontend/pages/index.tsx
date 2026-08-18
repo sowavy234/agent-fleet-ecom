@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -11,6 +12,9 @@ export default function Home() {
           <li>POST /auth/set-password {"email","password"} (first login sets password)</li>
           <li>POST /auth/login {"email","password"}</li>
         </ul>
+      </p>
+      <p>
+        <Link href="/login">Go to Login (basic)</Link>
       </p>
     </div>
   )

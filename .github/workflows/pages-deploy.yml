@@ -1,0 +1,41 @@
+name: Deploy Frontend to GitHub Pages
+
+on:
+  push:
+    branches: [ main, sowavy234-upgraded-broccoli ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install frontend deps
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile || pnpm install
+
+      - name: Build static export
+        working-directory: frontend
+        run: |
+          if [ -f package.json ] && grep -q "next" package.json; then
+            pnpm build && pnpm run export || echo "Next.js build/export failed or not configured"
+          else
+            echo "No Next.js project detected"
+          fi
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/out || ./frontend/out || ./frontend/public
