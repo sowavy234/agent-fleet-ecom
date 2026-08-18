@@ -1,0 +1,20 @@
+{
+  "owner@example.com": {
+    "name": "Owner",
+    "email": "owner@example.com",
+    "phone": "+10000000001",
+    "password_hash": null
+  },
+  "admin1@example.com": {
+    "name": "Admin One",
+    "email": "admin1@example.com",
+    "phone": "+10000000002",
+    "password_hash": null
+  },
+  "admin2@example.com": {
+    "name": "Admin Two",
+    "email": "admin2@example.com",
+    "phone": "+10000000003",
+    "password_hash": null
+  }
+}
