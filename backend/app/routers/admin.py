@@ -1,5 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from ..utils import user_store
+
 router = APIRouter()
 
 class SeedUser(BaseModel):
@@ -9,7 +11,8 @@ class SeedUser(BaseModel):
 
 @router.post("/seed-user")
 async def seed_user(u: SeedUser):
-    # For scaffold: call auth.create_user endpoint or import _USERS
-    from .auth import _USERS
-    _USERS[u.email] = {"name": u.name, "email": u.email, "phone": u.phone, "password_hash": None}
+    try:
+        user_store.create_user(u.name, u.email, u.phone)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="User exists")
     return {"status": "seeded", "email": u.email}
