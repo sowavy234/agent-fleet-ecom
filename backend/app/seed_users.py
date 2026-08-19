@@ -1,4 +1,7 @@
-from .utils import user_store
+from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from utils import user_store
 
 ADMINS = [
     {"name": "Owner", "email": "owner@example.com", "phone": "+10000000001"},

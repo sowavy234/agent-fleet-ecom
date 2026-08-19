@@ -1,8 +1,17 @@
-node_modules/
-.env
+# Python
 __pycache__/
+*.pyc
+*.pyo
 venv/
-.DS_Store
+.env
+.env.*
+# Node
+node_modules/
 dist/
 .next/
-.env.local
+# Logs and runtime data
+*.log
+backend/data/
+/tmp/
+# Mac
+.DS_Store

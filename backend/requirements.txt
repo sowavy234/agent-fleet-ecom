@@ -6,4 +6,9 @@ pydantic
 passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
+httpx
 sqlite3
+whois
+beautifulsoup4
+tldextract
+redis>=4.6.0
