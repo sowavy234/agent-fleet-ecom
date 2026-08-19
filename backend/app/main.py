@@ -16,8 +16,10 @@ def create_app():
     # server process manager (start/stop/status/logs) under /admin/server
     app.include_router(process_manager.router, prefix="/admin/server")
     # notes / notifications for admin users
-    from .routers import notes
+    from .routers import notes, realtime
     app.include_router(notes.router, prefix="/notes")
+    # WebSocket-based realtime signaling/chat under /ws
+    app.include_router(realtime.router, prefix="/ws")
 
     @app.on_event("startup")
     async def _startup():
