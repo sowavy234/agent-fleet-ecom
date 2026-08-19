@@ -15,6 +15,9 @@ def create_app():
     app.include_router(agents.router, prefix="/agents")
     # server process manager (start/stop/status/logs) under /admin/server
     app.include_router(process_manager.router, prefix="/admin/server")
+    # notes / notifications for admin users
+    from .routers import notes
+    app.include_router(notes.router, prefix="/notes")
 
     @app.on_event("startup")
     async def _startup():
