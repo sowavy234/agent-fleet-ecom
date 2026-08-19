@@ -1,7 +1,8 @@
 import os
 import asyncio
 import time
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Depends
+from ..routers.auth import get_current_user
 from pydantic import BaseModel
 from typing import Optional
 
@@ -112,10 +113,8 @@ def _port_in_use(host: str, port: int) -> Optional[int]:
         return None
 
 @router.post("/start")
-async def start_server(payload: StartPayload):
-    """Start a uvicorn subprocess. Requires admin password. Optionally provide a custom cmd list."""
-    if not _check_password(payload.password):
-        raise HTTPException(status_code=403, detail="invalid admin password")
+async def start_server(payload: StartPayload, user=Depends(get_current_user)):
+    """Start a uvicorn subprocess. Requires authenticated admin user. Optionally provide a custom cmd list."""
     async with _process_lock:
         # if our managed process is running, honor it
         if _process is not None and _process.returncode is None:
@@ -139,9 +138,7 @@ async def start_server(payload: StartPayload):
         return {"started": True, "pid": proc.pid}
 
 @router.post("/stop")
-async def stop_server(payload: AuthPayload):
-    if not _check_password(payload.password):
-        raise HTTPException(status_code=403, detail="invalid admin password")
+async def stop_server(payload: AuthPayload, user=Depends(get_current_user)):
     async with _process_lock:
         if _process is None:
             return {"stopped": False, "reason": "not_running"}
@@ -149,7 +146,7 @@ async def stop_server(payload: AuthPayload):
         return {"stopped": ok}
 
 @router.get("/status")
-async def status():
+async def status(user=Depends(get_current_user)):
     global _process, _process_info
     if _process is None:
         return {"running": False}

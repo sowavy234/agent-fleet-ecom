@@ -18,6 +18,26 @@ def create_app():
 
     @app.on_event("startup")
     async def _startup():
+        # Seed initial admin users if none exist
+        try:
+            from .utils import user_store
+            users = user_store.list_users()
+            if not users:
+                # import seed script and run
+                from . import seed_users
+                # seed_users.py expects to be runnable; call its function by importing
+                try:
+                    # seed_users creates users on import only when __main__ so call create loop
+                    # fallback: create directly from ADMINS list
+                    for a in seed_users.ADMINS:
+                        try:
+                            user_store.create_user(a['name'], a['email'], a.get('phone'))
+                        except Exception:
+                            pass
+                except Exception:
+                    pass
+        except Exception:
+            pass
         # try to connect to Redis; if available, start Redis workers, else fallback
         try:
             r = get_redis()

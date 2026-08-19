@@ -4,9 +4,9 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 from utils import user_store
 
 ADMINS = [
-    {"name": "Owner", "email": "owner@example.com", "phone": "+10000000001"},
-    {"name": "Admin One", "email": "admin1@example.com", "phone": "+10000000002"},
-    {"name": "Admin Two", "email": "admin2@example.com", "phone": "+10000000003"},
+    {"name": "Sean", "email": "sean@example.com", "phone": ""},
+    {"name": "Renae", "email": "renae@example.com", "phone": ""},
+    {"name": "Andrea", "email": "andrea@example.com", "phone": ""},
 ]
 
 if __name__ == '__main__':

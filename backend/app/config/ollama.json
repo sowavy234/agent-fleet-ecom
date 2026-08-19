@@ -1,0 +1,5 @@
+{
+  "host": "http://localhost:11434",
+  "model": "llama2", 
+  "notes": "Configure Ollama local model host. This file is a placeholder—set host/model as appropriate. The project can use Ollama for local uncensored models where available. Ensure you comply with licensing and content policies."
+}
