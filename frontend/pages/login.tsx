@@ -18,6 +18,38 @@ export default function Login(){
       })
       if(!res.ok){
         const j = await res.json()
+        // If password not set, prompt user to create one
+        if(j.detail && j.detail.toLowerCase().includes('password not set')){
+          const ok = confirm('No password set for this account. Set password now?')
+          if(ok){
+            const pw = prompt('Enter new password')
+            if(!pw){
+              setMessage('Password not set')
+              return
+            }
+            const setr = await fetch('http://localhost:8000/auth/set-password', {
+              method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email, password: pw})
+            })
+            if(!setr.ok){
+              const sj = await setr.json()
+              setMessage('Failed to set password: ' + (sj.detail||setr.statusText))
+              return
+            }
+            // try login again
+            const relog = await fetch('http://localhost:8000/auth/login', {
+              method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email, password: pw})
+            })
+            if(!relog.ok){
+              const rj = await relog.json()
+              setMessage(rj.detail || 'Login failed after setting password')
+              return
+            }
+            const rj = await relog.json()
+            localStorage.setItem('access_token', rj.access_token)
+            router.push('/')
+            return
+          }
+        }
         setMessage(j.detail || 'Login failed')
         return
       }
